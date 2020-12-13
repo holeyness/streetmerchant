@@ -40,13 +40,11 @@ async function main() {
 	}
 
 
-	let proxyArgs;
+	const proxyArgs: string[] = [];
 	// Add the address of the proxy server if defined
 	if (config.proxy.address) {
-		proxyArgs = [
-			...args,
-			`--proxy-server=${config.proxy.protocol}://${config.proxy.address}:${config.proxy.port}`
-		]
+		proxyArgs.push(...args);
+		proxyArgs.push(`--proxy-server=${config.proxy.protocol}://${config.proxy.address}:${config.proxy.port}`);
 	}
 
 
@@ -59,8 +57,9 @@ async function main() {
 		},
 		headless: config.browser.isHeadless,
 	});
+
 	const proxyBrowser = await puppeteer.launch({
-		args,
+		args: proxyArgs,
 		defaultViewport: {
 			height: config.page.height,
 			width: config.page.width
