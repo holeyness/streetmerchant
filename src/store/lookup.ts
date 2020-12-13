@@ -265,9 +265,16 @@ async function lookupCard(
 	link: Link
 ): Promise<number> {
 	const givenWaitFor = store.waitUntil ? store.waitUntil : 'networkidle0';
-	const response: Response | null = await page.goto(link.url, {
-		waitUntil: givenWaitFor
-	});
+	let response: Response | null;
+	if (store.timeout) {
+		response = await page.goto(link.url, {
+				timeout: timeout
+			});
+	} else {
+		response = await page.goto(link.url, {
+				waitUntil: givenWaitFor
+			});
+	}
 
 	if (!response) {
 		logger.debug(Print.noResponse(link, store, true));

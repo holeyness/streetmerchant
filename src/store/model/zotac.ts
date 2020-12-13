@@ -1,7 +1,8 @@
 import {Store} from './store';
 
 export const Zotac: Store = {
-	backoffStatusCodes: [403, 503],
+	timeout: 10000,
+	backoffStatusCodes: [403],
 	currency: '$',
 	labels: {
 		inStock: {
