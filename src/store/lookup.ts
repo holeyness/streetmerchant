@@ -268,7 +268,7 @@ async function lookupCard(
 	let response: Response | null;
 	if (store.timeout) {
 		response = await page.goto(link.url, {
-				timeout: timeout
+				timeout: store.timeout
 			});
 	} else {
 		response = await page.goto(link.url, {
