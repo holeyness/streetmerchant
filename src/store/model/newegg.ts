@@ -3,6 +3,7 @@ import fetch from 'node-fetch';
 
 export const Newegg: Store = {
 	currency: '$',
+	useProxy: true,
 	labels: {
 		captcha: {
 			container: 'body',

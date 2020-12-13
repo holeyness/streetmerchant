@@ -308,11 +308,11 @@ const nvidia = {
 };
 
 const page = {
-	height: 1080,
+	height: 1440,
 	inStockWaitTime: envOrNumber(process.env.IN_STOCK_WAIT_TIME),
 	screenshot: envOrBoolean(process.env.SCREENSHOT),
 	timeout: envOrNumber(process.env.PAGE_TIMEOUT, 30000),
-	width: 1920
+	width: 2560
 };
 
 const proxy = {

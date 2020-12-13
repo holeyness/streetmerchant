@@ -35,19 +35,31 @@ async function main() {
 		args.push('--disable-gpu');
 	}
 
-	// Add the address of the proxy server if defined
-	if (config.proxy.address) {
-		args.push(
-			`--proxy-server=${config.proxy.protocol}://${config.proxy.address}:${config.proxy.port}`
-		);
-	}
-
 	if (args.length > 0) {
 		logger.info('ℹ puppeteer config: ', args);
 	}
 
+
+	let proxyArgs;
+	// Add the address of the proxy server if defined
+	if (config.proxy.address) {
+		proxyArgs = [
+			...args,
+			`--proxy-server=${config.proxy.protocol}://${config.proxy.address}:${config.proxy.port}`
+		]
+	}
+
+
 	await stop();
 	browser = await puppeteer.launch({
+		args,
+		defaultViewport: {
+			height: config.page.height,
+			width: config.page.width
+		},
+		headless: config.browser.isHeadless,
+	});
+	const proxyBrowser = await puppeteer.launch({
 		args,
 		defaultViewport: {
 			height: config.page.height,
@@ -64,7 +76,11 @@ async function main() {
 			store.setupAction(browser);
 		}
 
-		setTimeout(tryLookupAndLoop, getSleepTime(store), browser, store);
+		if (store.useProxy) {
+			setTimeout(tryLookupAndLoop, getSleepTime(store), proxyBrowser, store);
+		} else {
+			setTimeout(tryLookupAndLoop, getSleepTime(store), browser, store);
+		}
 	}
 
 	await startAPIServer();

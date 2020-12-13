@@ -173,6 +173,7 @@ export type StatusCodeRangeArray = Array<number | [number, number]>;
 
 export type Store = {
 	isIncognito?: boolean,
+	useProxy?: boolean,
 	realTimeInventoryLookup?: (itemNumber: string) => Promise<boolean>;
 	/**
 	 * The range of status codes which will trigger backoff, i.e. an increasing
