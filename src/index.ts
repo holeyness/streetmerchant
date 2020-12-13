@@ -69,8 +69,12 @@ async function main() {
 	});
 
 	config.browser.userAgent = await browser.userAgent();
+	const stores = [...storeList.values()]
+		.map((a) => ({sort: Math.random(), value: a}))
+		.sort((a, b) => a.sort - b.sort)
+  		.map((a) => a.value);
 
-	for (const store of storeList.values()) {
+	for (const store of stores) {
 		logger.debug('store links', {meta: {links: store.links}});
 		if (store.setupAction !== undefined) {
 			store.setupAction(browser);
