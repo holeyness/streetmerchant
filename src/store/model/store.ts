@@ -197,6 +197,7 @@ export type Store = {
 	 * 0 -> 399 inclusive.
 	 */
 	successStatusCodes?: StatusCodeRangeArray;
+	timeout?: number;
 	waitUntil?: LoadEvent;
 	minPageSleep?: number;
 	maxPageSleep?: number;
