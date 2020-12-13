@@ -161,13 +161,19 @@ async function lookup(browser: Browser, store: Store) {
 
 	/* eslint-disable no-await-in-loop */
 	for (const link of store.links) {
+		await process(store, link, browser)
+	}
+	/* eslint-enable no-await-in-loop */
+}
+
+async function process(store: Store, link: Link, browser: Browser) : Promise<void> {
 		if (!filterStoreLink(link)) {
-			continue;
+			return Promise.resolve();
 		}
 
 		if (config.page.inStockWaitTime && inStock[link.url]) {
 			logger.info(Print.inStockWaiting(link, store, true));
-			continue;
+			return Promise.resolve();
 		}
 
 		const proxy = nextProxy(store);
@@ -254,8 +260,8 @@ async function lookup(browser: Browser, store: Store) {
 		if (isIncognito) {
 			await context.close();
 		}
-	}
-	/* eslint-enable no-await-in-loop */
+
+		return Promise.resolve()
 }
 
 async function lookupCard(
