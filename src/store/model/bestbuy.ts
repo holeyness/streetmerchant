@@ -2,6 +2,8 @@ import {Store} from './store';
 
 export const BestBuy: Store = {
 	currency: '$',
+	useProxy: true,
+	isIncognito: true,
 	labels: {
 		inStock: {
 			container:
