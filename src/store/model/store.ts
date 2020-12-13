@@ -172,6 +172,7 @@ export type Labels = {
 export type StatusCodeRangeArray = Array<number | [number, number]>;
 
 export type Store = {
+	isIncognito?: boolean,
 	realTimeInventoryLookup?: (itemNumber: string) => Promise<boolean>;
 	/**
 	 * The range of status codes which will trigger backoff, i.e. an increasing
@@ -198,6 +199,7 @@ export type Store = {
 	 */
 	successStatusCodes?: StatusCodeRangeArray;
 	selector?: string;
+	selectorTimeout?: number;
 	waitUntil?: LoadEvent;
 	minPageSleep?: number;
 	maxPageSleep?: number;

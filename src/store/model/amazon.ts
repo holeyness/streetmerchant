@@ -708,5 +708,6 @@ export const Amazon: Store = {
 			url: 'https://www.amazon.com/dp/B07F84FJ1G'
 		}
 	],
-	name: 'amazon'
+	name: 'amazon',
+	isIncognito: true,
 };

@@ -174,9 +174,9 @@ async function lookup(browser: Browser, store: Store) {
 
 		const useAdBlock =
 			!config.browser.lowBandwidth && !store.disableAdBlocker;
-		const customContext = config.browser.isIncognito;
+		const isIncognito = config.browser.isIncognito || store.isIncognito;
 
-		const context = customContext
+		const context = isIncognito
 			? await browser.createIncognitoBrowserContext()
 			: browser.defaultBrowserContext();
 		const page = await context.newPage();
@@ -251,7 +251,7 @@ async function lookup(browser: Browser, store: Store) {
 		// before redirecting to the next page
 		await processBackoffDelay(store, link, statusCode);
 		await closePage(page);
-		if (customContext) {
+		if (isIncognito) {
 			await context.close();
 		}
 	}
@@ -268,10 +268,10 @@ async function lookupCard(
 
 	let response: Response | null;
 
-	if (store.selector) {
+	if (store.selector && store.selectorTimeout) {
 		response = await page.goto(link.url);
 		await Promise.race([page.waitForSelector(store.selector),
-			new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 30000))]);
+			new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), store.selectorTimeout))]);
 	} else {
 		response = await page.goto(link.url, {
 				waitUntil: givenWaitFor

@@ -79,5 +79,6 @@ export const Zotac: Store = {
 		}
 	],
 	name: 'zotac',
-	selector: ".center-header-block"
+	selector: ".center-header-block",
+	selectorTimeout: 30000
 };
